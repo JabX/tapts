@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"target": "ES5",
+		"noImplicitAny": true,
+		"declaration": false,
+		"module": "commonjs",
+		"out": "bundle.js"
+	},
+	
+	"files" : [
+		"src/app.ts",
+		"src/game.d.ts",
+		"typings/tsd.d.ts"
+	]
+}
