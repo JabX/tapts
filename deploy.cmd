@@ -1,20 +1,5 @@
 @if "%SCM_TRACE_LEVEL%" NEQ "4" @echo off
 
-:: ----------------------
-:: KUDU Deployment Script
-:: Version: 0.1.13
-:: ----------------------
-
-:: Prerequisites
-:: -------------
-
-:: Verify node.js installed
-where node 2>nul >nul
-IF %ERRORLEVEL% NEQ 0 (
-  echo Missing node.js executable, please install node.js, if already installed make sure it can be reached from current environment.
-  goto error
-)
-
 :: Setup
 :: -----
 
@@ -111,7 +96,14 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
 IF DEFINED POST_DEPLOYMENT_ACTION call "%POST_DEPLOYMENT_ACTION%"
 IF !ERRORLEVEL! NEQ 0 goto error
 
-
+:: Cleaning up
+rd /S /Q %DEPLOYMENT_TARGET%\node_modules
+rd /S /Q %DEPLOYMENT_TARGET%\src
+rd /S /Q %DEPLOYMENT_TARGET%\typings
+del %DEPLOYMENT_TARGET%\*.json
+del %DEPLOYMENT_TARGET%\*.js
+robocopy %DEPLOYMENT_TARGET%\homepage\ . /S /MOV
+rd /S /Q %DEPLOYMENT_TARGET%\homepage
 
 goto end
 
