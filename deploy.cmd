@@ -96,14 +96,17 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
 IF DEFINED POST_DEPLOYMENT_ACTION call "%POST_DEPLOYMENT_ACTION%"
 IF !ERRORLEVEL! NEQ 0 goto error
 
-:: Cleaning up
+echo Cleaning up...
 rd /S /Q %DEPLOYMENT_TARGET%\node_modules
 rd /S /Q %DEPLOYMENT_TARGET%\src
 rd /S /Q %DEPLOYMENT_TARGET%\typings
 del %DEPLOYMENT_TARGET%\*.json
 del %DEPLOYMENT_TARGET%\*.js
-robocopy %DEPLOYMENT_TARGET%\homepage\ . /S /MOV
+del %DEPLOYMENT_TARGET%\.gitignore
+robocopy %DEPLOYMENT_TARGET%\homepage\ %DEPLOYMENT_TARGET%\ /S /MOV > output.log
+del output.log
 rd /S /Q %DEPLOYMENT_TARGET%\homepage
+echo Cleaning up done !
 
 goto end
 
