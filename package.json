@@ -4,16 +4,15 @@
   "description": "T'as pris ta serviette ?",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "node ./node_modules/tsd/build/cli.js install && node ./node_modules/webpack/bin/webpack.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "pixi.js": "^3.0.7"
-  },
-  "devDependencies": {
     "json-loader": "^0.5.2",
+    "pixi.js": "^3.0.7",
     "ts-loader": "^0.5.0",
+    "tsd": "^0.6.3",
     "typescript": "^1.5.3",
     "webpack": "^1.11.0"
   }
