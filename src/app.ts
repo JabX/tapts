@@ -17,7 +17,7 @@ let tray : ITray = {
 
 console.log(getPrice(dish));
 
-let renderer = Pixi.autoDetectRenderer(800, 600);
+let renderer = new Pixi.CanvasRenderer(800, 600);
 document.body.appendChild(renderer.view);
 
 let stage = new MainScene(renderer);
