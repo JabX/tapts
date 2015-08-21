@@ -1,25 +1,48 @@
 import Pixi = require('pixi.js');
 
-export class Button extends Pixi.Sprite
+export class Button extends Pixi.Container
 {
-	textureIdle = Pixi.Texture.fromImage('assets/button.png');
-    textureDown = Pixi.Texture.fromImage('assets/buttonDown.png');
-    textureOver = Pixi.Texture.fromImage('assets/buttonOver.png');
+	button =  new Pixi.Sprite();
+	texture: Pixi.Graphics;
+	textureDown: Pixi.Graphics;
 	
-	isOver: boolean;
-	isDown: boolean;
+	text = new Pixi.Text('', {font: "26px tapts-text", fill: "white", align: "center"});
 	
-	constructor(x : number, y : number) {
+	constructor(x: number, y: number, w: number, h: number, text: string) {
 		super();
 		
-		this._texture = this.textureIdle;
 		this.buttonMode = true;
-		this.anchor.set(0.5);
 		this.interactive = true;
+		this.hitArea = new Pixi.Rectangle(x, y, w, h);
 		
 		this.position.x = x;
 		this.position.y = y;
+		
+		// Constructing the button
+		this.texture = new Pixi.Graphics()
+			.beginFill(0x202020)
+			.drawRect(x + 5, y + 5, w, h)
+			.endFill()
+			.beginFill(0x252525)
+			.drawRect(x, y, w, h)
+			.endFill();
+			
+		this.textureDown = new Pixi.Graphics()
+			.beginFill(0x202020)
+			.drawRect(x + 5, y + 5, w, h)
+			.endFill()
+			.beginFill(0x252525)
+			.drawRect(x + 3, y + 3, w, h)
+			.endFill();
+			
+		this.addChild(this.texture);
+		
+		this.text.text = text;
+		this.text.position.x = x + w/2 - this.text.width/2;
+		this.text.position.y = y + h/2 - this.text.height/2;
+		this.addChildAt(this.text, 1);
 
+		// Events
 		this.on('mousedown', this.onButtonDown)
 			.on('touchstart', this.onButtonDown)
 			
@@ -27,38 +50,19 @@ export class Button extends Pixi.Sprite
 			.on('touchend', this.onButtonUp)
 			.on('mouseupoutside', this.onButtonUp)
 			.on('touchendoutside', this.onButtonUp)
-	
-			.on('mouseover', this.onButtonOver)
-			
-			.on('mouseout', this.onButtonOut)
 	}
 	
 	onButtonDown() {
-        this.isDown = true;
-        this.texture = this.textureDown;
-        this.alpha = 1;
+        this.removeChild(this.texture);
+		this.addChildAt(this.textureDown, 0);
+		this.text.position.x += 3;
+		this.text.position.y += 3;
     }
 
 	onButtonUp() {
-		this.isDown = false;
-	
-		if (this.isOver)
-			this.texture = this.textureOver;
-		else
-			this.texture = this.textureIdle;
-	}
-	
-	onButtonOver() {
-		this.isOver = true;
-	
-		if (!this.isDown)
-			this.texture = this.textureOver;
-	}
-	
-	onButtonOut() {
-		this.isOver = false;
-	
-		if (!this.isDown)
-			this.texture = this.textureIdle;
+		this.removeChild(this.textureDown);
+		this.addChildAt(this.texture, 0);
+		this.text.position.x -= 3;
+		this.text.position.y -= 3;
 	}
 }
