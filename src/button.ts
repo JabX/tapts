@@ -4,7 +4,8 @@ export class Button extends Pixi.Container
 {
 	texture: Pixi.Graphics;
 	textureDown: Pixi.Graphics;
-	click: () => void;
+	
+	click: () => void; // Action to execute when the button is clicked
 	
 	text: Pixi.Text;
 	
@@ -13,6 +14,7 @@ export class Button extends Pixi.Container
 		
 		this.click = click;
 		
+		// Init
 		this.buttonMode = true;
 		this.interactive = true;
 		this.hitArea = new Pixi.Rectangle(x, y, w, h);
@@ -39,11 +41,22 @@ export class Button extends Pixi.Container
 			
 		this.addChild(this.texture);
 		
+		// Format text to fit in the given button size
 		let words = text.split(' ');
-		if (words.length == 2)
-			text = words[0] + '\n' + words[1];
 		
-		this.text = new Pixi.Text(text, {font: "26px tapts-text", fill: "white", align: "center"}, 4)
+		let wrappedText = words[0];
+		words.forEach( (word, i) => {
+			if (i != 0)
+				(wrappedText + word).length > w / 18 ? wrappedText += '\n' + word : wrappedText += ' ' + word;
+		});
+		
+		let fontSize = 26;
+		this.text = new Pixi.Text(wrappedText, {font: fontSize + 'px tapts-text', fill: 'white', align: 'center'}, 4);
+		
+		while (this.text.width > 0.9 * w || this.text.height > 0.9 * h) {
+			fontSize--;
+			this.text = new Pixi.Text(wrappedText, {font: fontSize + 'px tapts-text', fill: 'white', align: 'center'}, 4);
+		}
 		
 		this.text.x = x + w / 2 - this.text.width / 2;
 		this.text.y = y + h / 2 - this.text.height / 2;
@@ -53,7 +66,9 @@ export class Button extends Pixi.Container
 		this.on('mousedown', this.onButtonDown)
 			.on('touchstart', this.onButtonDown)
 			.on('mouseup', this.onButtonUp)
-			.on('touchend', this.onButtonUp);
+			.on('touchend', this.onButtonUp)
+			.on('mouseupoutside', this.onButtonUp)
+        	.on('touchendoutside', this.onButtonUp);
 	}
 	
 	onButtonDown() {

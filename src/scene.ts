@@ -4,10 +4,10 @@ import {Button} from './button'
 
 export class MainScene extends Pixi.Container
 {
-    renderer : Pixi.WebGLRenderer | Pixi.CanvasRenderer;
+    renderer : Pixi.CanvasRenderer;
     buttons = new Array<Button>();
 
-	constructor(renderer : Pixi.WebGLRenderer | Pixi.CanvasRenderer) {
+	constructor(renderer : Pixi.CanvasRenderer) {
 		super();
         this.renderer = renderer;
         
