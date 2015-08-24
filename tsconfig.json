@@ -9,9 +9,10 @@
 	
 	"files" : [
 		"src/app.ts",
-		"src/scene.ts",
-		"src/button.ts",
-		"src/game.d.ts",
+		"src/game.ts",
+		"src/components/button.ts",
+		"src/components/register.ts",
+		"src/model.d.ts",
 		"typings/tsd.d.ts"
 	]
 }
