@@ -31,7 +31,7 @@ export class Button extends Pixi.Container implements IButton
 		// Init
 		this.buttonMode = true;
 		this.interactive = true;
-		this.hitArea = new Pixi.Rectangle(x, y, w, h);
+		this.hitArea = new Pixi.Rectangle(0, 0, w, h);
 		
 		this.position.x = x;
 		this.position.y = y;
@@ -39,18 +39,18 @@ export class Button extends Pixi.Container implements IButton
 		// Constructing the button
 		this.texture = new Pixi.Graphics()
 			.beginFill(0x202020)
-			.drawRect(x + 5, y + 5, w, h)
+			.drawRect(5, 5, w, h)
 			.endFill()
 			.beginFill(0x252525)
-			.drawRect(x, y, w, h)
+			.drawRect(0, 0, w, h)
 			.endFill();
 			
 		this.textureDown = new Pixi.Graphics()
 			.beginFill(0x202020)
-			.drawRect(x + 5, y + 5, w, h)
+			.drawRect(5, 5, w, h)
 			.endFill()
 			.beginFill(0x252525)
-			.drawRect(x + 3, y + 3, w, h)
+			.drawRect(3, 3, w, h)
 			.endFill();
 			
 		this.addChild(this.texture);
@@ -72,8 +72,8 @@ export class Button extends Pixi.Container implements IButton
 			this.label = new Pixi.Text(wrappedText, {font: fontSize + 'px tapts-text', fill: 'white', align: 'center'}, 4);
 		}
 		
-		this.label.x = x + w / 2 - this.label.width / 2;
-		this.label.y = y + h / 2 - this.label.height / 2;
+		this.label.x = w / 2 - this.label.width / 2;
+		this.label.y = h / 2 - this.label.height / 2;
 		this.addChild(this.label);
 
 		// Events

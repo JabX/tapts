@@ -17,12 +17,12 @@ export class Register extends Pixi.Container implements IRegister
 	
 	constructor() {
 		super();
-		
+
 		// Create numpad buttons
 		for (var i = 0; i < 10; i++) {
-			let x = i == 0 || i == 2 || i == 5 || i == 8 ? 30 : i == 1 || i == 4 || i == 7 ? 0 : 60;
-			let y = i > 6 ? 0 : i > 3 ? 30 : i > 0 ? 60 : 90;
-			this.numpad.push(new Button(x, y, 50, 50, i.toString(), () => this.numpadClick(i))); // Wrong, needs proper currying to work
+			let x = i == 0 || i == 2 || i == 5 || i == 8 ? 60 : i == 1 || i == 4 || i == 7 ? 0 : 120;
+			let y = i > 6 ? 0 : i > 3 ? 120 : i > 0 ? 60 : 180;
+			this.numpad.push(new Button(x, y, 50, 50, i.toString(), this.numpadClick.bind(null, i)));
 		}
 		
 		this.numpad.forEach(key => this.addChild(key));
