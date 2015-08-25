@@ -1,19 +1,19 @@
 import {IButton} from './components/button'
 
-export interface ITray 
+export interface Tray 
 {
-	dishes: Array<IDish>,
-	card: ICard
+	dishes: Dish[]
+	card: Card
 }
 
-export interface IDish 
+export interface Dish 
 {
 	price: number,
 	name: string,
 	image: string
 }
 
-export interface ICard
+export interface Card
 {
 	number: number
 }

@@ -1,6 +1,6 @@
 import Pixi = require('pixi.js')
 
-import {IDish} from '../model'
+import {Dish} from '../model'
 
 export interface IButton
 {
@@ -10,7 +10,7 @@ export interface IButton
 
 export interface IDishButton
 {
-	dish: IDish
+	dish: Dish
 }
 
 export class Button extends Pixi.Container implements IButton
@@ -110,9 +110,9 @@ export class Button extends Pixi.Container implements IButton
 
 export class DishButton extends Button implements IDishButton
 {
-	dish: IDish
+	dish: Dish
 	
-	constructor(x: number, y: number, w: number, h: number, dish: IDish, click: () => void) {
+	constructor(x: number, y: number, w: number, h: number, dish: Dish, click: () => void) {
 		this.dish = dish;
 		super(x, y, w, h, dish.name, click);
 	}
